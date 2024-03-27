@@ -1,28 +1,14 @@
 ---
 import '../styles/global.css';
 const pageTitle = "Mis Post";
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro'
-import Header from '../components/Header.astro'
+const allPosts = await Astro.glob('../pages/posts/*.md');
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogPost from '../components/BlogPost.astro';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
-	</head>
-	<body>
-        <Header />
-		<h1> Mi blog de Astro aprendizaje</h1>
+<BaseLayout pageTitle={pageTitle}>
+	<h2> Mi blog de Astro aprendizaje</h2>
         <p>Aquí es donde voy a publicar mis cambios jijiji</p>
         <ul>
-            <li><a href="/posts/post-1/">Publicación 1</a></li>
-            <li><a href="/posts/post-2/">Publicación 2</a></li>
-            <li><a href="/posts/post-3/">Publicación 3</a></li>
+			{allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} />)}
         </ul>
-		<Footer/>
-      	</body>
-</html>
+</BaseLayout>
